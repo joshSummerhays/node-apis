@@ -1,5 +1,6 @@
 require('./config/config');
 
+const validator = require('validator');
 const express = require('express');
 const bodyParser = require('body-parser');
 const {ObjectID} = require('mongodb');
@@ -19,6 +20,10 @@ app.post('/user', (req, res) => {
         lastName: req.body.lastName,
         email: req.body.email
     });
+
+    if(!validator.isEmail(user.email)){
+        return res.status(404).send('not a valid email');
+    }
 
     user.save().then((doc) => {
         res.status(201).send(doc);
@@ -77,6 +82,8 @@ app.patch('/user/:id', (req, res) => {
 
     if(!ObjectID.isValid(id)){
         return res.status(404).send('not a valid id');
+    } else if (!validator.isEmail(body.email)) {
+        return res.status(404).send('not a valid email');
     }
 
     User.findByIdAndUpdate(id, {
