@@ -35,31 +35,26 @@ app.get('/user', (req, res) => {
     });
 });
 
-// app.get('/todos/:id', (req, res) => {
-//     let id = req.params.id
-//     // res.send(req.params);
-    
-//     // Todo.findById({
-//     //     _.id: id
-//     // })
+app.get('/user/:id', (req, res) => {
+    let id = req.params.id
 
-//     if(!ObjectID.isValid(id)){
-//         return res.status(404).send('not a valid id');
-//     }
+    if(!ObjectID.isValid(id)){
+        return res.status(404).send('not a valid id');
+    }
 
-//     Todo.findById(id).then((todo) => {
-//         if(!todo){
-//             return res.status(404).send('id not found');
-//         }
-//         res.send({todo});
-//     }, (e) => {
-//         res.status(400).send('ERROR!');
-//     });
-//     //.catch below the same thing?
-//     //.catch((e) => {
-//     //     res.status(400).send('ERROR!');
-//     // });
-// });
+    User.findById(id).then((user) => {
+        if(!user){
+            return res.status(404).send('id not found');
+        }
+        res.send({user});
+    }, (e) => {
+        res.status(400).send('ERROR with request');
+    });
+    //.catch below the same thing?
+    //.catch((e) => {
+    //     res.status(400).send('ERROR!');
+    // });
+});
 
 app.delete('/user/:id', (req, res) => {
     let id = req.params.id;
