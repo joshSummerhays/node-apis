@@ -61,20 +61,20 @@ app.get('/user', (req, res) => {
 //     // });
 // });
 
-// app.delete('/todos/:id', (req, res) => {
-//     let id = req.params.id;
-//     if(!ObjectID.isValid(id)){
-//         return res.status(404).send('not a valid id');
-//     }
-//     Todo.findByIdAndRemove({_id: id}).then((todo) => {
-//         if(!todo){
-//             return res.status(404).send('todo not found');
-//         }
-//         res.status(200).send({todo});
-//     }).catch((e) => {
-//         res.status(400).send('ERROR ERROR ERROR');
-//     });
-// });
+app.delete('/user/:id', (req, res) => {
+    let id = req.params.id;
+    if(!ObjectID.isValid(id)){
+        return res.status(404).send('not a valid id');
+    }
+    User.findByIdAndRemove({_id: id}).then((user) => {
+        if(!user){
+            return res.status(404).send('user not found');
+        }
+        res.status(200).send({user});
+    }).catch((e) => {
+        res.status(400).send('ERROR with request');
+    });
+});
 
 // app.patch('/todos/:id', (req, res) => {
 //     let id = req.params.id;
